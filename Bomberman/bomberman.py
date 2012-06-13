@@ -1,4 +1,5 @@
 import pygame
+import random
 
 from pygame.locals import *
 
@@ -7,7 +8,7 @@ class GameException(Exception):
 
 class Settings(object):
     def __init__(self):
-            self.resolution = (1000,1000)
+            self.resolution = (950, 950)
             self.background = (48,121,4)
             self.title = "BOMBERMAN"
 
@@ -16,6 +17,7 @@ class Game(object):
             pygame.init()
             self.init_from_settings(settings)
             self.clock = pygame.time.Clock()
+            self.table = [ [random.randint(0, 1) for i in range(
 
     def init_from_settings(self,settings):
             self.screen = pygame.display.set_mode(settings.resolution)
@@ -36,7 +38,18 @@ class Game(object):
         for event in pygame.event.get():
                 if event.type == QUIT:
                        raise GameException
-        for i in range(20):
+        for i in range(2, 18, 2):
+            for j in range(2, 18, 2):
+                x1 = i * 50
+                y1 = j * 50
+                x2 = 50
+                y2 = 50
+                pygame.draw.rect(self.background,
+                pygame.color.Color("grey"), (x1, y1, x2, y2), 0)
+                pygame.draw.rect(self.background,
+                pygame.color.Color("black"),(x1, y1, x2, y2), 2)
+
+        for i in range(21):
             x = i * 50
             y = (i + 1) * 50
             pygame.draw.rect(self.background, pygame.color.Color("grey"),
@@ -48,13 +61,13 @@ class Game(object):
             pygame.draw.rect(self.background, pygame.color.Color("black"),
                         (x, 0, y, 50), 3)
             pygame.draw.rect(self.background, pygame.color.Color("grey"),
-                        (950, x, 1000, y), 0)
+                        (900, x, 950, y), 0)
             pygame.draw.rect(self.background, pygame.color.Color("black"),
-                        (950, x, 1000, y), 3)
+                        (900, x, 950, y), 3)
             pygame.draw.rect(self.background, pygame.color.Color("grey"),
-                        (x, 950, y, 1000), 0)
+                        (x, 900, y, 950), 0)
             pygame.draw.rect(self.background, pygame.color.Color("black"),
-                        (x, 950, y, 1000), 3)
+                        (x, 900, y, 950), 3)
         self.screen.blit(self.background, (0,0))
      #  self.allsprites.draw(self.screen)
         pygame.display.flip()
